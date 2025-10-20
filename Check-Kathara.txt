@@ -1,0 +1,31 @@
+- Create a separate folder for your lab:
+mkdir ~/Lab1
+cd ~/Lab1
+
+- Create a main configuration file called lab.conf. This is the file that describes your network structure:
+nano lab.conf
+
+- Copy and paste the following content into the lab.conf file:
+pc1[0]=A
+pc2[0]=A
+
+- Create boot configuration file for pc1:
+nano pc1.startup
+
+- Copy and paste the following content into the pc1.startup file:
+ifconfig eth0 192.168.1.1/24 up
+
+- Create boot configuration file for pc2:
+nano pc2.startup
+
+- Copy and paste the following content into the pc2.startup file:
+ifconfig eth0 192.168.1.2/24 up
+
+- Run the command to start the lab:
+kathara lstart
+
+- From inside pc1, ping pc2 to test connection:
+ping 192.168.1.2
+
+- Once done, run the following command to delete the lab and stop all virtual machines:
+kathara lclean
