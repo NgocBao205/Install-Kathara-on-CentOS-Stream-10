@@ -1,2 +1,39 @@
 # Install-Kathara-on-CentOS-Stream-10
 Instructions on how to install Kathara on CentOS Stream 10
+
+# Install Kathara
+- Install the repository management tool:
+sudo dnf -y install dnf-plugins-core
+
+- Add official Docker repository:
+sudo dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+- Install the latest version of Docker Engine:
+sudo dnf install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+- Start and enable Docker to automatically run on boot:
+sudo systemctl start docker
+sudo systemctl enable docker
+
+- Add your user to the docker group to run Kathara (and Docker) without sudo:
+sudo usermod -aG docker $USER
+
+- You need to log out and log in again for this change to take effect.
+
+- CentOS's default firewall will conflict with the way Kathara manages Docker's network. You'll need to disable it:
+sudo systemctl stop firewalld
+sudo systemctl disable firewalld
+
+- Go to https://www.kathara.org/download.html, find the Red Hat-Based section and click the link for your architecture (kathara-*.rpm).
+
+- Use dnf to install this .rpm file:
+sudo dnf install ./Downloads/kathara-*.rpm
+
+- Check if Kathara is working:
+kathara --version
+
+- Kathara (by default) is configured to use a terminal emulator called xterm. You need to install xterm:
+sudo dnf install xterm
+
+- Kathara needs a Docker image to create virtual machines:
+docker pull kathara/base
